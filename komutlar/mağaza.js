@@ -25,7 +25,7 @@ module.exports = {
     "Mermiler": [
         "**Normal Mermi - 500$**\n> Standart mühimmat. Doğaüstü varlıklara geçici etki.",
         "**Gümüş Mermi - 7500$**\n> Kurtadamlar için ölümcül. Zehir etkili.",
-        "**Sarı Kurtboğanlı Mermi - 7500$**\n> Kurtadamları iyileşemez hale getirir.",
+        "**Sarı Kurtboğanlı Mermi - 50000$**\n> Kurtadamları iyileşemez hale getirir.",
         "**Kurtboğanlı Mermi - 7500$**\n> Kurtadamları iyileşemez hale getirir.",
         "**Ok - 500$**\n> Zehirli/kutsal türleri mevcuttur."
     ],
@@ -45,7 +45,7 @@ module.exports = {
         "**Zayıf Noktalar Kitabı - 15000$**\n> Tüm türlerin zayıflıkları.",
         "**Dağ Külü (5 kişilik) - 10000$**\n> Kitsune ve ruhani varlıklara karşı bariyer sağlar.",
         "**Kurtboğan - 1500$**\n> Doğaüstü varlıklara acı ve zayıflık verir.",
-        "**Sarı Kurtboğan - 1500$**\n> Daha etkili kurtboğan türü."
+        "**Sarı Kurtboğan - 70000$**\n> Daha etkili kurtboğan türü."
     ],
     "Klasik ve Modern Silahlar": [
         "**Tabanca - 10000$**\n> Hafif, hızlı müdahale için.",
