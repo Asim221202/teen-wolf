@@ -7,7 +7,7 @@ const prefix = '.';
 const arcaneBotId = '437808476106784770';
 const fiboBotId = '735147814878969968';
 const excludedChannels = ['1327621148606988349', '1327625994411970560'];
-const notificationChannelId = '1368539004823408719';
+const notificationChannelId = '1327609643853156362';
 const rewardPer1000 = 3000;
 
 module.exports = async (client, message) => {
@@ -15,7 +15,7 @@ module.exports = async (client, message) => {
     if (message.author.bot || excludedChannels.includes(message.channel.id)) return;
 
     // 📌 PARTNER MESAJ TAKİBİ
-    
+    trackPartnerMessage(message);
 
     // 📌 FIBO BUMP ÖDÜLÜ
     if (
@@ -75,27 +75,40 @@ module.exports = async (client, message) => {
     }
 
     // 📌 KELİME SAYMA ve SEVİYE HESAPLAMA
-     wordData = await Words.findById(message.author.id);
+    let wordData = await Words.findById(message.author.id);
 
-        
-        const currentLevel = Math.floor(wordData.words / 1000);
-        if (currentLevel > (wordData.lastLevel || 0)) {
-            await addBalance(message.author.id, rewardPer1000);
+    if (!wordData) {
+        wordData = new Words({
+            _id: message.author.id,
+            words: 0,
+            lastLevel: 0
+        });
+    }
 
-            const channel = client.channels.cache.get(notificationChannelId);
-            if (channel) {
-                const embed = new MessageEmbed()
-                    .setTitle('Seviye Atlama Ödülü!')
-                    .setDescription(`🎉 <@${message.author.id}>! **${currentLevel}. seviye** oldun ve **${rewardPer1000}$** kazandın!`)
-                    .setColor('#FFD700')
-                    .setTimestamp();
-                channel.send({ content: `<@${message.author.id}>`, embeds: [embed] });
-            }
+    const wordCount = message.content.trim().split(/\s+/).length;
+    wordData.words += wordCount;
 
-            wordData.lastLevel = currentLevel;
+    const currentLevel = Math.floor(wordData.words / 1000);
+    if (currentLevel > (wordData.lastLevel || 0)) {
+        await addBalance(message.author.id, rewardPer1000);
+
+        const channel = client.channels.cache.get(notificationChannelId);
+        if (channel) {
+            const embed = new MessageEmbed()
+                .setTitle('Seviye Atlama Ödülü!')
+                .setDescription(`🎉 <@${message.author.id}>! **${currentLevel}. seviye** oldun ve **${rewardPer1000}$** kazandın!`)
+                .setColor('#FFD700')
+                .setTimestamp();
+            channel.send({ content: `<@${message.author.id}>`, embeds: [embed] });
         }
 
-        
+        wordData.lastLevel = currentLevel;
+    }
+
+    await wordData.save();
+
+    // 📌 PREFIX KOMUTLARI (.komut şeklindeki)
+    // Buraya prefix komutlar için kontrol eklenebilir
 };
 
 // 💰 MONGODB BAKİYE EKLEME FONKSİYONU
