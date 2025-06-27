@@ -85,9 +85,7 @@ module.exports = async (client, message) => {
         });
     }
 
-    const wordCount = message.content.trim().split(/\s+/).length;
-    wordData.words += wordCount;
-
+    
     const currentLevel = Math.floor(wordData.words / 1000);
     if (currentLevel > (wordData.lastLevel || 0)) {
         await addBalance(message.author.id, rewardPer1000);
